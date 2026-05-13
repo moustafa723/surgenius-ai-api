@@ -27,18 +27,38 @@ app.add_middleware(
 # ==========================================
 # 3. Load Models Globally
 # ==========================================
-print("⏳ Loading SURGENIUS AI Pipeline from Local Paths...")
-try:
-    unet_path = r'D:\PythonProject6\PythonProject6\models\Attention_UNet_HCC_with_ID.keras'
-    feature_extractor_path = r'D:\PythonProject6\PythonProject6\models\Hybrid_FeatureExtractor_V2.h5'
-    rf_model_path = r'D:\PythonProject6\PythonProject6\models\Hybrid_RandomForest_BestModel_V2.pkl'
+import os
 
-    unet_model = load_model(unet_path, compile=False)
+print("⏳ Loading SURGENIUS AI Pipeline...")
+
+try:
+    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+    unet_path = os.path.join(
+    BASE_DIR,
+    "models",
+    "Attention_UNet_HCC_with_ID.keras"
+   )
+
+    feature_extractor_path = os.path.join(
+    BASE_DIR,
+    "models",
+    "Hybrid_FeatureExtractor_V2.h5"
+    )
+
+    rf_model_path = os.path.join(
+        BASE_DIR,
+        "models",
+        "Hybrid_RandomForest_BestModel_V2.pkl"
+    )
+
+    unet_model = load_model(unet_path,compile=False)
     feature_extractor = load_model(feature_extractor_path, compile=False)
     rf_model = joblib.load(rf_model_path)
+
     print("✅ All 3 Models Loaded Successfully! Server is Ready. 🚀")
+
 except Exception as e:
-    print(f"⚠️ Error loading models: {e}")
+         print(f"⚠️ Error loading models: {e}")
 
 
 # ==========================================
